@@ -63,11 +63,12 @@ class AddListItensViewController: UIViewController, UITableViewDataSource , UITa
     @IBAction func itensFilterChanged(_ sender: UITextField) {
         self.filtedList = itens
         print("fazer filtro!!!")
+        
         let textSearchUpper = itemNameTextField.text?.uppercased()
         if itemNameTextField.text != "" {
             let filter = itens.filter({ (item) -> Bool in  return item.name.uppercased().starts(with: textSearchUpper!)})
             self.filtedList = filter
-            //print("")
+            
         }
         self.tableView.reloadData()
     }
@@ -103,7 +104,7 @@ class AddListItensViewController: UIViewController, UITableViewDataSource , UITa
         
         // Format cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ItensCell
-        let lista = itens[indexPath.row]
+        let lista = filtedList[indexPath.row]
        
         cell.itemLabel.text = lista.name
         cell.checkImage.image = lista.isMarked == true ? UIImage(systemName:"plus.circle.fill") : UIImage(systemName:"circle")
@@ -145,6 +146,7 @@ class AddListItensViewController: UIViewController, UITableViewDataSource , UITa
         self.itens.remove(at: index!)
         self.itens.insert(item,at: index!)
     }
+    self.filtedList = self.itens
      self.tableView.reloadData()
     }    
 }
